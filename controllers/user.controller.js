@@ -55,7 +55,7 @@ async function login(req, res) {
     } else {
       const isMatch = await bcryptjs.compare(req.body.password, user.password);
       if (isMatch) {
-        const token = jwt.sign({ id: user.id }, 'secretkey');
+        const token = jwt.sign({ id: user.id }, process.env.JWT_KEY);
         return res.status(200).send({
           message: 'User logged in successfully',
           data: {
