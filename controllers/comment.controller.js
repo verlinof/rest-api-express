@@ -65,7 +65,7 @@ async function update(req, res) {
     };
 
     const validator = new Validator();
-    const validationResponse = await validator.validate(req.body, schema);
+    await validator.validate(req.body, schema);
 
     const updatedComment = await comment.update(req.body);
     return res.status(200).send({
