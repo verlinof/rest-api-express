@@ -6,8 +6,9 @@ const router = express.Router();
 
 //Route
 router.get('/', postController.index);
+router.get('/:id', checkAuthMiddleware.checkAuth, postController.show);
 router.post('/', checkAuthMiddleware.checkAuth, postController.store);
 router.patch('/:id', checkAuthMiddleware.checkAuth, postController.update);
-router.get('/:id', checkAuthMiddleware.checkAuth, postController.show);
+router.delete('/:id', checkAuthMiddleware.checkAuth, postController.destroy);
 
 module.exports = router

@@ -128,9 +128,30 @@ async function update(req, res) {
   }
 }
 
+async function destroy(req, res) {
+  try {
+    const id = req.params.id;
+    const post = await models.Post.findByPk(id);
+    if (!post) {
+      return res.status(404).send({
+        message: "Post not found"
+      });
+    }
+    await post.destroy();
+    res.status(200).send({
+      message: "Post deleted successfully"
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Internal Server Error"
+    });
+  }
+}
+
 module.exports = {
   index,
   store,
   show,
-  update
+  update,
+  destroy
 }
