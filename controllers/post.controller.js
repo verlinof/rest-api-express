@@ -1,4 +1,6 @@
 const models = require('../models');
+//Validator
+const Validator = require('fastest-validator');
 
 function index(req, res) {
   models.Post.findAll().then(posts => {
@@ -13,7 +15,7 @@ function index(req, res) {
   })
 }
 
-function store(req, res) {
+async function store(req, res) {
   const post = {
     title: req.body.title,
     content: req.body.content,
@@ -22,6 +24,25 @@ function store(req, res) {
     userId: 1
   }
 
+  //Validate Input and Data
+  const schema = {
+    title: { type: 'string', optional: false, max: '100' },
+    content: { type: 'string', optional: false, max: '5000' },
+    imageUrl: { type: 'string', optional: false },
+    categoryId: { type: 'number', optional: false },
+    userId: { type: 'number', optional: false }
+  };
+
+  //Validating
+  const validator = new Validator();
+  const validationResponse = await validator.validate(post, schema);
+
+  if (validationResponse !== true) {
+    return res.status(400).send({
+      message: 'Validation failed',
+      data: validationResponse
+    })
+  }
   //To create the data, and insert to database, like laravel
   models.Post.create(post).then(() => {
     res.status(201).send({
@@ -74,6 +95,26 @@ async function update(req, res) {
       });
     }
 
+    //Validate Input and Data
+    const schema = {
+      title: { type: 'string', optional: false, max: '100' },
+      content: { type: 'string', optional: false, max: '5000' },
+      imageUrl: { type: 'string', optional: false },
+      categoryId: { type: 'number', optional: false },
+      userId: { type: 'number', optional: false }
+    };
+
+    //Validating
+    const validator = new Validator();
+    const validationResponse = await validator.validate(postData, schema);
+
+    if (validationResponse !== true) {
+      return res.status(400).send({
+        message: 'Validation failed',
+        data: validationResponse
+      });
+    }
+
     await post.update(postData);
 
     res.status(200).send({
@@ -81,7 +122,6 @@ async function update(req, res) {
       data: post
     });
   } catch (error) {
-    console.error(error);
     res.status(500).send({
       message: "Internal Server Error"
     });
