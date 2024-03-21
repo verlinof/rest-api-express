@@ -2,8 +2,17 @@ const models = require('../models');
 //Validator
 const Validator = require('fastest-validator');
 
-function index(req, res) {
-  models.Post.findAll().then(posts => {
+async function index(req, res) {
+  models.Post.findAll({
+    include: [
+      {
+        model: models.User
+      },
+      {
+        model: models.Category
+      }
+    ]
+  }).then(posts => {
     res.status(200).send({
       message: 'Posts found',
       data: posts

@@ -18,6 +18,7 @@ module.exports = {
         content: 'Post 2 content',
         userId: 1,
         categoryId: 3,
+        imageUrl: 'https://picsum.photos/id/1/200/300',
         createdAt: new Date(),
         updatedAt: new Date(),
 
@@ -27,6 +28,7 @@ module.exports = {
         content: 'Content 3',
         userId: 1,
         categoryId: 2,
+        imageUrl: 'https://picsum.photos/id/1/200/300',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
