@@ -1,6 +1,7 @@
 const models = require('../models');
 //Validator
 const Validator = require('fastest-validator');
+const jwt = require('jsonwebtoken'); // Importing JWT library
 
 async function index(req, res) {
   models.Post.findAll({
@@ -25,12 +26,14 @@ async function index(req, res) {
 }
 
 async function store(req, res) {
+  const userId = req.user;
+
   const post = {
     title: req.body.title,
     content: req.body.content,
     imageUrl: req.body.imageUrl,
     categoryId: req.body.categoryId,
-    userId: 1
+    userId: userId
   }
 
   //Validate Input and Data
@@ -49,14 +52,14 @@ async function store(req, res) {
   if (validationResponse !== true) {
     return res.status(400).send({
       message: 'Validation failed',
-      data: validationResponse
+      data: validationResponse,
     })
   }
   //To create the data, and insert to database, like laravel
   models.Post.create(post).then(() => {
     res.status(201).send({
       message: 'Post created successfully',
-      data: post
+      data: post,
     })
   }).catch(err => {
     res.status(500).send({

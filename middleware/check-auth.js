@@ -12,7 +12,7 @@ function checkAuth(req, res, next) {
           message: 'Failed to authenticate token.'
         });
       }
-      req.user = decoded;
+      req.user = decoded.id;
       next();
     });
   } catch (e) {
