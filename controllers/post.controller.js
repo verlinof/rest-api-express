@@ -4,25 +4,26 @@ const Validator = require('fastest-validator');
 const jwt = require('jsonwebtoken'); // Importing JWT library
 
 async function index(req, res) {
-  models.Post.findAll({
-    include: [
-      {
-        model: models.User
-      },
-      {
-        model: models.Category
-      }
-    ]
-  }).then(posts => {
+  try {
+    const posts = await models.Post.findAll({
+      include: [
+        {
+          model: models.User
+        },
+        {
+          model: models.Category
+        }
+      ]
+    });
     res.status(200).send({
-      message: 'Posts found',
+      message: 'Success',
       data: posts
     })
-  }).catch(err => {
+  } catch (err) {
     res.status(500).send({
       message: err.message
     })
-  })
+  }
 }
 
 async function store(req, res) {
@@ -68,24 +69,24 @@ async function store(req, res) {
   });
 }
 
-function show(req, res) {
-  const id = req.params.id
-  models.Post.findByPk(id).then(post => {
-    if (post) {
-      res.status(200).send({
-        message: 'Post found',
-        data: post
-      })
-    } else {
-      res.status(404).send({
+async function show(req, res) {
+  try {
+    const id = req.params.id
+    const post = await models.Post.findByPk(id);
+    if (!post) {
+      return res.status(404).send({
         message: 'Post not found'
       })
     }
-  }).catch(err => {
+    return res.status(200).send({
+      message: 'Post found',
+      data: post
+    })
+  } catch (err) {
     res.status(500).send({
       message: err.message
     })
-  })
+  }
 }
 
 async function update(req, res) {
