@@ -33,3 +33,9 @@ sequelize db:seed:all
 npm run start
 
 ```
+
+6. Access Documentation
+
+```
+Open this URL http://localhost:3000/api-docs
+```
