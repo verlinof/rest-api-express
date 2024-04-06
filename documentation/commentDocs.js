@@ -177,7 +177,7 @@
 
 /**
  * @swagger
- * /api/comments/{id}:
+ * /comments/{id}:
  *   patch:
  *     summary: Update a comment
  *     description: Update an existing comment with the provided data.
@@ -243,7 +243,7 @@
 
 /**
  * @swagger
- * /api/comments/{id}:
+ * /comments/{id}:
  *   delete:
  *     summary: Delete a comment by ID
  *     description: Delete an existing comment by its ID.

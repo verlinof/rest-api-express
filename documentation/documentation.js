@@ -7,4 +7,6 @@
  *     description: Operations related to users
  *   - name: Comments
  *     description: Operations related to comments
+ *   - name: Categories
+ *     description: Operations related to categories
  */
