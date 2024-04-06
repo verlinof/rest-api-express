@@ -122,7 +122,6 @@
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 
-
 /**
  * @swagger
  * /posts:
