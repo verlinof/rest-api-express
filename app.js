@@ -22,6 +22,6 @@ app.use('/comments', commentRoute);
 app.use('/categories', categoryRoute);
 app.use('/images', imageRoute);
 //Documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/', swaggerUi.serve, swaggerUi.setup(specs));
 
 module.exports = app
